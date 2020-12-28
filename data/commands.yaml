@@ -1,8 +1,8 @@
 # This file contains all the commands to execute in the host and VMs for the different steps of the project
 
 setUpScenario:
- - cd /mnt/tmp
  - wget http://idefix.dit.upm.es/cdps/pc2/pc2.tgz
  - sudo vnx --unpack pc2.tgz
- - cd pc2
+prepareAndRunScenario:
  - bin/prepare-pc2-labo
+ - sudo vnx -f pc2.xml --create

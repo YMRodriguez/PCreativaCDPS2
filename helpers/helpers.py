@@ -6,4 +6,4 @@ Created on 27 dic. 2020
 from subprocess import call
 
 def ExecuteEach(listCommands):
-    map(lambda x: call(x.split(" ")), listCommands)
+    list(map(lambda x: call(), listCommands))

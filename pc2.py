@@ -1,14 +1,17 @@
 # This script will serve as the base for the project
 
 # Imports
-from subprocess import call
+from subprocess import call, check_call
 import yaml
 from helpers.helpers import *
+import subprocess
 
 # Variables
 commands = yaml.load(open("data/commands.yaml"), Loader = yaml.FullLoader)
 
 # Scenario set up
 def scenarioSetUp():
-    ExecuteEach(commands.get("setUpScenario"))
+    list(map(lambda x: subprocess.check_call(x.split(" "), cwd='/mnt/tmp'), commands.get("setUpScenario")))
+    list(map(lambda x: subprocess.check_call(x.split(" "), cwd='/mnt/tmp/pc2'), commands.get("prepareAndRunScenario")))
+
 scenarioSetUp()
