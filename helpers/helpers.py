@@ -5,5 +5,6 @@ Created on 27 dic. 2020
 '''
 from subprocess import call
 
-def ExecuteEach(listCommands):
-    list(map(lambda x: call(), listCommands))
+def ExecuteEach( listCommands, offset = ""):
+    list(map(lambda x: call((offset + x ).split(" ")), listCommands))
+    
