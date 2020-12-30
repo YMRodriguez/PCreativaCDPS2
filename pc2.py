@@ -5,6 +5,7 @@ from subprocess import call, check_call
 import yaml
 from helpers.helpers import *
 import subprocess
+from configurations.addServer import *
 
 # Variables
 commands = yaml.load(open("data/commands.yaml"), Loader = yaml.FullLoader)
@@ -16,5 +17,9 @@ def scenarioSetUp():
 def runScenario():
     list(map(lambda x: subprocess.check_call(x.split(" "), cwd='/mnt/tmp/pc2'), commands.get("runScenario")))
 
-#scenarioSetUp()
-runScenario()
+def main():
+    scenarioSetUp()
+    adaptNewServerXML()
+    runScenario()
+
+main()

@@ -33,4 +33,3 @@ def adaptNewServerXML(newName = "s4", extraServers = 0):
     a.write(pc2_str)
     a.close()
     
-adaptNewServerXML()
