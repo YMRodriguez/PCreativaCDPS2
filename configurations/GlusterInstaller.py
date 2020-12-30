@@ -3,10 +3,9 @@
 from subprocess import call
 import yaml
 
-#commands = yaml.load(open("./data/commands.yaml"), Loader = yaml.FullLoader)
-
+commands = yaml.load(open("../data/commands.yaml"), Loader = yaml.FullLoader)
 # This function creates the disk server cluster from nas1
-def NASconf(nNas, lc):
+def NASconf(nNAS, lc):
     nasIDS = list(range(1, nNas +1 ))
     preStr = lc.get("baseCLIforVM")[0]
     list(map(lambda x: call(preStr + " nas1 -- "+ lc.get("addServerToGluster")[0] + str(x), shell= True), nasIDS))
@@ -17,7 +16,6 @@ def MountNas(nServ, lc):
     servIDS = list(range(1, nServ +1 ))
     preStr = lc.get("baseCLIforVM")[0]
     list(map(lambda x: call(preStr + " nas1 -- "+ x, shell = True), lc.get("createAndRunVolumes")))
-
     for i in servIDS:
         call(preStr + " s"+ str(i) + " -- " + lc.get("mountNAS")[0], shell = True)
         call(preStr + " s"+ str(i) + " -- " + lc.get("mountNAS")[1], shell = True)

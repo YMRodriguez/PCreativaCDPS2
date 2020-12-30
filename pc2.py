@@ -14,7 +14,6 @@ from configurations.serverQuizConf import *
 from configurations.logsConf import *
 from reportlab.lib.units import cm
 
-
 # Variables
 commands = yaml.load(open("data/commands.yaml"), Loader = yaml.FullLoader)
 ids = [] # Meter los que sean necesarios, podemos coger 4 por defecto pero es como una mejora adicional
