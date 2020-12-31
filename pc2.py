@@ -28,7 +28,6 @@ def runScenario(cm):
 def main(cm):
     scenarioSetUp(cm)
     adaptNewServerXML()
-    adaptLogsServerXML()
     runScenario(cm)
     NASconf(3, cm)
     NASconf(3, cm)

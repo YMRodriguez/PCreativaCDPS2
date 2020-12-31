@@ -18,7 +18,6 @@ createAndRunVolumes:
 mountNAS:
  - mkdir /mnt/nas
  - mount -t glusterfs 20.20.4.21:/nas /mnt/nas
-<<<<<<< HEAD
 installHAProxy:
  - apt-get install -y haproxy
 restartHAProxy:

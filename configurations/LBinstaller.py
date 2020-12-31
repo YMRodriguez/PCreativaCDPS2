@@ -41,10 +41,3 @@ def createHAProxy(nServ, cm):
     file.close()
     call("sudo /lab/cdps/bin/cp2lxc ./data/haproxy.cfg /var/lib/lxc/lb/rootfs/etc/haproxy", shell = True)
     call(preStr + " lb -- " + cm.get("restartHAProxy")[0], shell = True) 
-
-    
-#installHAProxy(commands)
-#createHAProxy(4, commands)
-
-#call("sudo /lab/cdps/bin/cp2lxc ./data/haproxy.cfg /var/lib/lxc/lb/rootfs/etc/haproxy", shell = True)
-
