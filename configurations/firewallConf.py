@@ -12,5 +12,3 @@ def firewallInstallation(cm):
     call( preStr + " fw -- " + cm.get("firewall")[0], shell = True)
     call("sudo /lab/cdps/bin/cp2lxc ./data/fw.fw /var/lib/lxc/fw/rootfs/etc/fw", shell = True)
     call( preStr + " fw -- " + cm.get("firewall")[1], shell = True)
-
-#firewallInstallation(commands)

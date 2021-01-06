@@ -1,3 +1,4 @@
+
 from subprocess import call
 import yaml
 
@@ -14,5 +15,3 @@ def serverQuiz(cm):
         else:
             cmd_line = order + "bash -c \"sed -i '29d' quiz_2021/app.js;cd quiz_2021;npm install;npm install forever;npm install mysql2;export QUIZ_OPEN_REGISTER=yes;export DATABASE_URL=mysql://quiz:xxxx@20.20.4.31:3306/quiz;./node_modules/forever/bin/forever start ./bin/www;mount -t glusterfs 20.20.4.21:/nas public/uploads\""
             call(cmd_line, shell=True)
-            
-#serverQuiz(commands)

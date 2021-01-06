@@ -6,7 +6,7 @@ import yaml
 #from PCreativaCDPS2.helpers.helpers import *
 from subprocess import call
 
-def dbInstaller(listCommands = "", offset = ""):
+def dbInstaller():
     call("sudo lxc-attach --clear-env -n bbdd -- apt update", shell = True)
     call("sudo lxc-attach --clear-env -n bbdd -- apt -y install mariadb-server", shell = True)
     call("sudo lxc-attach --clear-env -n bbdd -- sed -i -e 's/bind-address.*/bind-address=0.0.0.0/' -e 's/utf8mb4/utf8/' /etc/mysql/mariadb.conf.d/50-server.cnf", shell = True)
