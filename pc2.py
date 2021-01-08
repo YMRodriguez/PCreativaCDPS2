@@ -40,6 +40,5 @@ def main(cm):
     installLogs(cm)
     rsyslogServer(cm)
     rsyslogClient(cm)
-    
-    
+
 main(commands)

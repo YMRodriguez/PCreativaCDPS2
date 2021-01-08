@@ -3,7 +3,7 @@
 from subprocess import call
 import yaml
 
-#commands = yaml.load(open("../data/commands.yaml"), Loader = yaml.FullLoader)
+#commands = yaml.load(open("./data/commands.yaml"), Loader = yaml.FullLoader)
 
 # This function creates the disk server cluster from nas1
 def NASconf(nNAS, lc):
