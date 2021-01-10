@@ -31,5 +31,4 @@ def adaptNewServerXML(newName = "s4", extraServers = 0):
     pc2_str = unescape(open("/mnt/tmp/pc2/pc2.xml", "r+").read())
     a = open("/mnt/tmp/pc2/pc2.xml", "w+")
     a.write(pc2_str)
-    a.close()
-    
+    a.close()    

@@ -6,20 +6,34 @@ import yaml
 from helpers.helpers import *
 import subprocess
 from configurations.addServer import *
+from configurations.GlusterInstaller import *
+from configurations.databaseInstaller import *
+from configurations.firewallConf import *
+from configurations.LBinstaller import *
+
+
 
 # Variables
 commands = yaml.load(open("data/commands.yaml"), Loader = yaml.FullLoader)
+ids = [] # Meter los que sean necesarios, podemos coger 4 por defecto pero es como una mejora adicional
 
 # Scenario set up
-def scenarioSetUp():
+def scenarioSetUp(cm):
     list(map(lambda x: subprocess.check_call(x.split(" "), cwd='/mnt/tmp'), commands.get("setUpScenario")))
     list(map(lambda x: subprocess.check_call(x.split(" "), cwd='/mnt/tmp/pc2'), commands.get("prepareScenario")))
-def runScenario():
+def runScenario(cm):
     list(map(lambda x: subprocess.check_call(x.split(" "), cwd='/mnt/tmp/pc2'), commands.get("runScenario")))
 
-def main():
-    scenarioSetUp()
+def main(cm):
+    scenarioSetUp(cm)
     adaptNewServerXML()
-    runScenario()
-
-main()
+    runScenario(cm)
+    NASconf(3, cm)
+    NASconf(3, cm)
+    MountNas(4, cm)
+    dbInstaller()
+    installHAProxy(cm)
+    createHAProxy(4, cm)
+    firewallInstallation(cm)
+    
+main(commands)
