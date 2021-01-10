@@ -4,7 +4,7 @@ import yaml
 commands = yaml.load(open("../data/commands.yaml"), Loader = yaml.FullLoader)
 
 def serverQuiz():
-    for server in ["s1","s2","s3","s4"]:
+    for server in ["s1","s2","s3"]:
         order = commands.get("baseCLIforVM")[0] + server + " -- "
         cmd_line = order + "git clone https://github.com/CORE-UPM/quiz_2021.git"
         call(cmd_line, shell=True)
@@ -16,7 +16,7 @@ def serverQuiz():
         call(cmd_line, shell=True)
         cmd_line = order + "npm install forever"
         call(cmd_line, shell=True)
-        cmd_line = order + "npm install mysql12"
+        cmd_line = order + "npm install mysql2"
         call(cmd_line, shell=True)
         cmd_line = order + "export QUIZ_OPEN_REGISTER=yes"
         call(cmd_line, shell=True)
