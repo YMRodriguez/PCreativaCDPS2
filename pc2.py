@@ -12,6 +12,7 @@ from configurations.firewallConf import *
 from configurations.LBinstaller import *
 from configurations.serverQuizConf import *
 from configurations.logsConf import *
+from reportlab.lib.units import cm
 
 
 # Variables
@@ -38,6 +39,9 @@ def main(cm):
     createHAProxy(4, cm)
     firewallInstallation(cm)
     serverQuiz(cm)
+    installLogs(cm)
+    rsyslogServer(cm)
+    rsyslogClient(cm)
     
     
 main(commands)

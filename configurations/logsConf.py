@@ -44,26 +44,38 @@ def installLogs(cm):
         list(map(lambda x: call(order + x, shell = True), cm.get("installRsyslog")))
         
 def rsyslogServer(cm):
-    #Create .conf file in rsyslog server
-    order = cm.get("baseCLIforVM")[0] + " logs -- "
-    call(order + "cd /etc/rsyslog.d", shell=True)
-    call(order + "sudo touch 01-server.conf", shell=True)
-    
-    #Edit .conf file part to complete
-    
+    #Create .conf server file 
+    call("touch /mnt/tmp/pc2/01-server.conf", shell=True)
+    confFile= open("/mnt/tmp/pc2/01-server.conf", "r+")
+    confFile.write("# Listen for TCP\n")
+    confFile.write("$ModLoad imtcp\n")
+    confFile.write("# Listen on port 514\n")
+    confFile.write("$InputTCPServerRun 514\n")
+    confFile.write("$template RemoteServer, \"/var/log/%HOSTNAME%/%SYSLOGFACILITY-TEXT%.log\"\n")
+    confFile.write("*.* ?RemoteServer\n")
+    confFile.close()
+ 
+    #Copy .conf file into the rsyslog server
+    call("sudo /lab/cdps/bin/cp2lxc /mnt/tmp/pc2/01-server.conf /var/lib/lxc/logs/rootfs/etc/rsyslog.d", shell=True)
+        
     #Restart rsyslog in server
+    order = cm.get("baseCLIforVM")[0] + " logs -- "
     call(order + "sudo systemctl restart rsyslog", shell=True)
     
 def rsyslogClient(cm):
-    #Create .conf file in rsyslog client
-    order = cm.get("baseCLIforVM")[0] + " logs -- "
-    call(order + "cd /etc/rsyslog.d", shell=True)
-    call(order + "sudo vi 01-client.conf", shell=True)
+    #Create .conf client file
+    call("touch /mnt/tmp/pc2/01-client.conf", shell=True)
+    confFile= open("/mnt/tmp/pc2/01-client.conf", "r+")
+    confFile.write("*.*    @@10.250.0.34:514")
+    confFile.close()
     
-    #Edit .conf file part to complete 
-    
-    #Restart rsyslog in client and send logs to server
-    call(order + "sudo systemctl restart rsyslog", shell=True)
-    call(order + "journalctl -f -u rsyslog", shell=True)
+    for server in ["s1", "s2", "s3", "s4"]:
+        #Copy .conf file into the rsyslog clients
+        call("sudo /lab/cdps/bin/cp2lxc /mnt/tmp/pc2/01-client.conf /var/lib/lxc/" + server + "/rootfs/etc/rsyslog.d", shell=True)
+        
+        #Restart rsyslog in client and send logs to server
+        order = cm.get("baseCLIforVM")[0] + server + " -- "
+        call(order + "sudo systemctl restart rsyslog", shell=True)
+        call(order + "journalctl -f -u rsyslog &", shell=True)
     
      
