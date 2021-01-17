@@ -9,15 +9,23 @@ prepareScenario:
  - bin/prepare-pc2-labo
 runScenario:
  - sudo vnx -f pc2.xml --create
-installDB:
- - apt update
- - apt -y install mariadb-server
- - sed -i -e 's/bind-address.*/bind-address=0.0.0.0/' -e 's/utf8mb4/utf8/' /etc/mysql/mariadb.conf.d/50-server.cnf
- - systemctl restart mysql
- - mysqladmin -u root password xxxx
- - mysql -u root --password='xxxx' -e \"CREATE USER 'quiz' IDENTIFIED BY 'xxxx';\"
- - mysql -u root --password='xxxx' -e \"CREATE DATABASE quiz;\"
- - mysql -u root --password='xxxx' -e \"GRANT ALL PRIVILEGES ON quiz.* to 'quiz'@'localhost' IDENTIFIED by 'xxxx';\"
- - mysql -u root --password='xxxx' -e \"GRANT ALL PRIVILEGES ON quiz.* to 'quiz'@'%' IDENTIFIED by 'xxxx';\"
- - mysql -u root --password='xxxx' -e \"FLUSH PRIVILEGES;\"
-
+addServerToGluster:
+ - gluster peer probe 20.20.4.2
+createAndRunVolumes:
+ - gluster volume create nas
+ - gluster volume start nas
+ - gluster volume set nas network.ping-timeout 5
+mountNAS:
+ - mkdir /mnt/nas
+ - mount -t glusterfs 20.20.4.21:/nas /mnt/nas
+installHAProxy:
+ - apt-get install -y haproxy
+restartHAProxy:
+ - systemctl restart haproxy
+firewall:
+ - mkdir /etc/fw
+ - sudo -S /etc/fw/fw.fw
+installRsyslog:
+ - sudo apt-get update && apt-get install rsyslog
+ - sudo systemctl enable rsyslog
+ - sudo systemctl start rsyslog

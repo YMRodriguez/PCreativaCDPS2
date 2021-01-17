@@ -10,7 +10,8 @@ from configurations.GlusterInstaller import *
 from configurations.databaseInstaller import *
 from configurations.firewallConf import *
 from configurations.LBinstaller import *
-
+from configurations.serverQuizConf import *
+from configurations.logsConf import *
 
 
 # Variables
@@ -27,6 +28,7 @@ def runScenario(cm):
 def main(cm):
     scenarioSetUp(cm)
     adaptNewServerXML()
+    adaptLogsServerXML()
     runScenario(cm)
     NASconf(3, cm)
     NASconf(3, cm)
@@ -35,5 +37,7 @@ def main(cm):
     installHAProxy(cm)
     createHAProxy(4, cm)
     firewallInstallation(cm)
+    serverQuiz(cm)
+    
     
 main(commands)
