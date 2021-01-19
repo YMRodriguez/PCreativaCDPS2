@@ -4,7 +4,6 @@
 from subprocess import call, check_call
 import yaml
 
-
 #commands = yaml.load(open("./data/commands.yaml"), Loader=yaml.FullLoader)
 
 def firewallInstallation(cm):

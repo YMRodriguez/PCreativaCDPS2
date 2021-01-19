@@ -7,7 +7,7 @@ import yaml
 
 # This function creates the disk server cluster from nas1
 def NASconf(nNAS, lc):
-    nasIDS = list(range(1, nNas +1 ))
+    nasIDS = list(range(1, nNAS +1 ))
     preStr = lc.get("baseCLIforVM")[0]
     list(map(lambda x: call(preStr + " nas1 -- "+ lc.get("addServerToGluster")[0] + str(x), shell= True), nasIDS))
     call(preStr + " nas1 -- gluster volume create nas replica 3 20.20.4.2"+ str(nasIDS[0]) +":/nas/ 20.20.4.2"+str(nasIDS[1])+":/nas/ 20.20.4.2"+str(nasIDS[2])+":/nas/ force", shell = True)
