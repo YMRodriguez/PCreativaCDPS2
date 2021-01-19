@@ -4,7 +4,7 @@
 #
 #  Firewall Builder  fwb_ipt v5.3.7
 #
-#  Generated Mon Jan  4 19:18:41 2021 UTC by root
+#  Generated Tue Jan 19 00:25:10 2021 UTC by root
 #
 # files: * fw.fw /etc/fw.fw
 #
@@ -351,15 +351,16 @@ script_body() {
     # 
     echo "Rule 0 (global)"
     # 
-    $IPTABLES -N Cid3840X559.0
-    $IPTABLES -A OUTPUT  -d 20.20.2.2   -m conntrack --ctstate NEW  -j Cid3840X559.0
+    # Permite acceso al servidor web de s1
+    $IPTABLES -N Cid2897X578.0
+    $IPTABLES -A OUTPUT  -d 20.20.2.2   -m conntrack --ctstate NEW  -j Cid2897X578.0
     $IPTABLES -N RULE_0
-    $IPTABLES -A Cid3840X559.0 -p icmp  -m icmp  --icmp-type any  -j RULE_0
-    $IPTABLES -A Cid3840X559.0 -p tcp -m tcp  --dport 80  -j RULE_0
-    $IPTABLES -N Cid3840X559.1
-    $IPTABLES -A FORWARD  -d 20.20.2.2   -m conntrack --ctstate NEW  -j Cid3840X559.1
-    $IPTABLES -A Cid3840X559.1 -p icmp  -m icmp  --icmp-type any  -j RULE_0
-    $IPTABLES -A Cid3840X559.1 -p tcp -m tcp  --dport 80  -j RULE_0
+    $IPTABLES -A Cid2897X578.0 -p icmp  -m icmp  --icmp-type any  -j RULE_0
+    $IPTABLES -A Cid2897X578.0 -p tcp -m tcp  -m multiport  --dports 8001,80  -j RULE_0
+    $IPTABLES -N Cid2897X578.1
+    $IPTABLES -A FORWARD  -d 20.20.2.2   -m conntrack --ctstate NEW  -j Cid2897X578.1
+    $IPTABLES -A Cid2897X578.1 -p icmp  -m icmp  --icmp-type any  -j RULE_0
+    $IPTABLES -A Cid2897X578.1 -p tcp -m tcp  -m multiport  --dports 8001,80  -j RULE_0
     $IPTABLES -A RULE_0  -j LOG  --log-level info --log-prefix "RULE 0 -- ACCEPT "
     $IPTABLES -A RULE_0  -j ACCEPT
     # 
@@ -491,7 +492,7 @@ test -z "$cmd" && {
 
 case "$cmd" in
     start)
-        log "Activating firewall script generated Mon Jan  4 19:18:41 2021 by root"
+        log "Activating firewall script generated Tue Jan 19 00:25:10 2021 by root"
         check_tools
          prolog_commands 
         check_run_time_address_table_files

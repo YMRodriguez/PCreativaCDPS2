@@ -16,8 +16,8 @@ from reportlab.lib.units import cm
 
 # Variables
 commands = yaml.load(open("data/commands.yaml"), Loader = yaml.FullLoader)
-ids = [] # Meter los que sean necesarios, podemos coger 4 por defecto pero es como una mejora adicional
-
+nNAS=3
+nServ=4
 # Scenario set up
 def scenarioSetUp(cm):
     list(map(lambda x: subprocess.check_call(x.split(" "), cwd='/mnt/tmp'), commands.get("setUpScenario")))
@@ -25,20 +25,20 @@ def scenarioSetUp(cm):
 def runScenario(cm):
     list(map(lambda x: subprocess.check_call(x.split(" "), cwd='/mnt/tmp/pc2'), commands.get("runScenario")))
 
-def main(cm):
+def main(cm, nNAS, nServ):
     scenarioSetUp(cm)
     adaptNewServerXML()
     runScenario(cm)
-    NASconf(3, cm)
-    NASconf(3, cm)
-    MountNas(4, cm)
+    NASconf(nNAS, cm)
+    NASconf(nNAS, cm)
+    MountNas(nServ, cm)
     dbInstaller()
     installHAProxy(cm)
-    createHAProxy(4, cm)
+    createHAProxy(nServ, cm)
     firewallInstallation(cm)
     serverQuiz(cm)
     installLogs(cm)
     rsyslogServer(cm)
     rsyslogClient(cm)
 
-main(commands)
+main(commands, nNAS, nServ)
