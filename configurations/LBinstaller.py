@@ -25,7 +25,7 @@ def createHAProxy(nServ, cm):
     file.write("\n")
     file.write("backend webservers\n")
     file.write("\tmode http\n")
-    file.write("\tbalance roundrobin\n")
+    file.write("\tbalance leastconn\n")
     file.close()
     for i in servIDS:
         file = open("./data/haproxy.cfg", "a")
