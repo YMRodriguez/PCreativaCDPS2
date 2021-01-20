@@ -22,9 +22,11 @@ installHAProxy:
  - apt-get install -y haproxy
 restartHAProxy:
  - systemctl restart haproxy
+restartMDB:
+ - systemctl restart mariadb
 firewall:
  - mkdir /etc/fw
- - sudo -S /etc/fw/fw.fw
+ - bash /etc/fw/fw.fw
 installRsyslog:
  - sudo apt-get update && apt-get install rsyslog
  - sudo systemctl enable rsyslog

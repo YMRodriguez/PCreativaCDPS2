@@ -12,7 +12,7 @@ from configurations.firewallConf import *
 from configurations.LBinstaller import *
 from configurations.serverQuizConf import *
 from configurations.logsConf import *
-from reportlab.lib.units import cm
+from configurations.databaseReplication import *
 
 # Variables
 commands = yaml.load(open("data/commands.yaml"), Loader = yaml.FullLoader)
@@ -28,8 +28,9 @@ def runScenario(cm):
 def main(cm, nNAS, nServ):
     scenarioSetUp(cm)
     adaptNewServerXML()
+    adaptLogsServerXML()
+    adaptSlaveDatabaseXML()
     runScenario(cm)
-    NASconf(nNAS, cm)
     NASconf(nNAS, cm)
     MountNas(nServ, cm)
     dbInstaller()
