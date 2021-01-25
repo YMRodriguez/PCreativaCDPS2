@@ -1,11 +1,12 @@
+# This module is in charge of installing and running log system
+
 from subprocess import call
 import yaml
 from lxml import etree
 import xml.etree.ElementTree as ET
 from xml.sax.saxutils import unescape
 
-#commands = yaml.load(open("./data/commands.yaml"), Loader = yaml.FullLoader)
-
+# This function adapts logs VM 
 def adaptLogsServerXML(newName = "logs"):
     # Define the parser
     parser = etree.XMLParser(remove_blank_text=True)
@@ -36,13 +37,13 @@ def adaptLogsServerXML(newName = "logs"):
     a.write(pc2_str)
     a.close()    
     
-
-
+# This function installs rsyslog in every server
 def installLogs(cm):
     for server in ["s1","s2","s3","s4"]:
         order = cm.get("baseCLIforVM")[0] + server + " -- "
         list(map(lambda x: call(order + x, shell = True), cm.get("installRsyslog")))
-        
+
+# This function creates the centralized server into the logs VM  
 def rsyslogServer(cm):
     #Create .conf server file 
     call("touch /mnt/tmp/pc2/01-server.conf", shell=True)
@@ -62,6 +63,7 @@ def rsyslogServer(cm):
     order = cm.get("baseCLIforVM")[0] + " logs -- "
     call(order + "sudo systemctl restart rsyslog", shell=True)
     
+# This function is in charge of defining the client of rsyslog in each server 
 def rsyslogClient(cm):
     #Create .conf client file
     call("touch /mnt/tmp/pc2/01-client.conf", shell=True)
@@ -77,5 +79,3 @@ def rsyslogClient(cm):
         order = cm.get("baseCLIforVM")[0] + server + " -- "
         call(order + "sudo systemctl restart rsyslog", shell=True)
         call(order + "journalctl -f -u rsyslog &", shell=True)
-    
-     

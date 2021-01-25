@@ -132,7 +132,13 @@ log_bin = /var/log/mysql/mysql-bin.log
 log_bin_index =/var/log/mysql/mysql-bin.log.index
 relay_log = /var/log/mysql/mysql-relay-bin
 relay_log_index = /var/log/mysql/mysql-relay-bin.index
+
 # This group is only read by MariaDB-10.1 servers.
 # If you use the same .cnf file for MariaDB of different versions,
 # use this group for options that older servers don't understand
 [mariadb-10.1]
+server-id = 2
+log_bin = /var/log/mysql/mysql-bin.log
+log_bin_index =/var/log/mysql/mysql-bin.log.index
+relay_log = /var/log/mysql/mysql-relay-bin
+relay_log_index = /var/log/mysql/mysql-relay-bin.index
