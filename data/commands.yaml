@@ -1,0 +1,33 @@
+# This file contains all the commands to execute in the host and VMs for the different steps of the project
+
+baseCLIforVM:
+ - sudo lxc-attach --clear-env -n
+setUpScenario:
+ - wget http://idefix.dit.upm.es/cdps/pc2/pc2.tgz
+ - sudo vnx --unpack pc2.tgz
+prepareScenario:
+ - bin/prepare-pc2-labo
+runScenario:
+ - sudo vnx -f pc2.xml --create
+addServerToGluster:
+ - gluster peer probe 20.20.4.2
+createAndRunVolumes:
+ - gluster volume create nas
+ - gluster volume start nas
+ - gluster volume set nas network.ping-timeout 5
+mountNAS:
+ - mkdir /mnt/nas
+ - mount -t glusterfs 20.20.4.21:/nas /mnt/nas
+installHAProxy:
+ - apt-get install -y haproxy
+restartHAProxy:
+ - systemctl restart haproxy
+restartMDB:
+ - systemctl restart mariadb
+firewall:
+ - mkdir /etc/fw
+ - bash /etc/fw/fw.fw
+installRsyslog:
+ - sudo apt-get update && apt-get install rsyslog
+ - sudo systemctl enable rsyslog
+ - sudo systemctl start rsyslog
