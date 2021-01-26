@@ -1,9 +1,8 @@
-
+# This module is in charge of configuring and installing the Quiz
 from subprocess import call
 import yaml
 
-commands = yaml.load(open("./data/commands.yaml"), Loader = yaml.FullLoader)
-
+# This function install the quiz into the sN VMs
 def serverQuiz(cm):
     for server in ["s1","s2","s3","s4"]:
         order = cm.get("baseCLIforVM")[0] + server + " -- "

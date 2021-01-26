@@ -4,14 +4,12 @@ from subprocess import call, check_call
 import subprocess
 import yaml
 
-#commands = yaml.load(open("./data/commands.yaml"), Loader=yaml.FullLoader)
-
-# This method installs HAProxy software in lb virtual machine
+# This function installs HAProxy software in lb virtual machine
 def installHAProxy(cm):
     preStr = cm.get("baseCLIforVM")[0]
     list(map(lambda x: call(preStr + " lb -- " + x, shell=True), cm.get("installHAProxy")))
 
-# This method modifies the haproxy file and adds it to lb virtual machine
+# This function modifies the haproxy file and adds it to lb virtual machine
 def createHAProxy(nServ, cm):
     servIDS = list(range(1, nServ + 1))
     preStr = cm.get("baseCLIforVM")[0]

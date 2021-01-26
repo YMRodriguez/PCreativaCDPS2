@@ -4,8 +4,7 @@
 from subprocess import call, check_call
 import yaml
 
-#commands = yaml.load(open("./data/commands.yaml"), Loader=yaml.FullLoader)
-
+# This function install the edited configuration in the fw VM
 def firewallInstallation(cm):
     preStr = cm.get("baseCLIforVM")[0]
     call( preStr + " fw -- " + cm.get("firewall")[0], shell = True)
