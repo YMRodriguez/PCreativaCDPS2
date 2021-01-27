@@ -68,7 +68,7 @@ def rsyslogClient(cm):
     #Create .conf client file
     call("touch /mnt/tmp/pc2/01-client.conf", shell=True)
     confFile= open("/mnt/tmp/pc2/01-client.conf", "r+")
-    confFile.write("*.*    @@10.250.0.34:514")
+    confFile.write("*.*    @@20.20.3.15:514")
     confFile.close()
     
     for server in ["s1", "s2", "s3", "s4"]:
